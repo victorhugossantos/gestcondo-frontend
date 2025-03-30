@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Sidebar from "../components/Sidebar";
+import Modal from "../components/Modal";
+import { formatarCPF, formatarTelefone } from "../utils/formatters";
 import { v4 as uuidv4 } from "uuid";
 import {
   PencilSquareIcon,
@@ -124,29 +126,7 @@ const Moradores = () => {
   const abrirModal = () => {
     setModalAberto(true);
   };
-
-  const formatarCPF = (cpf) => {
-    return cpf
-        .replace(/\D/g, "") // Remove todos os caracteres não numéricos
-        .replace(/(\d{3})(\d)/, "$1.$2") // Adiciona o primeiro ponto
-        .replace(/(\d{3})(\d)/, "$1.$2") // Adiciona o segundo ponto
-        .replace(/(\d{3})(\d{1,2})$/, "$1-$2") // Adiciona o traço
-        .substring(0, 14); // Limita o tamanho a 14 caracteres (incluindo pontos e traço)
-  }
-
-
-  const formatarTelefone = (valor) => {
-    return valor
-      .replace(/\D/g, "") // Remove todos os caracteres não numéricos
-      .replace(/(\d{2})(\d)/, "($1) $2") // Adiciona o parêntese e espaço
-      .replace(/(\d{5})(\d)/, "$1-$2") // Adiciona o traço
-      .substring(0, 15); // Limita o tamanho a 15 caracteres (incluindo parênteses, espaço e traço)
-  }
   
-
-
-
-
   // Redenrização da pagina
   return (
     <div className="flex min-h-screen bg-gradient-to-br from-gray-800 to-gray-900">
@@ -169,21 +149,32 @@ const Moradores = () => {
 
         {/* Modal */}
         {modalAberto && (
-          <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-            <div className="bg-gray-800/95 w-full max-w-md rounded-xl border border-gray-700/50 shadow-2xl backdrop-blur-sm">
-              <div className="text-gray-400 flex justify-between items-center p-6 border-b border-gray-700/50">
-                <h2>
-                  {editando ? "Editar Morador" : "Cadastrar novo morador"}
-                </h2>
-                <button
-                  onClick={fecharModal}
-                  className="text-gray-400 hover:text-gray-200 transition-colors"
-                >
-                  <XMarkIcon className="w-6 h-6" />
-                </button>
-              </div>
 
-              <form onSubmit={handleSubmit} className="p-6 space-y-4">
+          <Modal 
+            isOpen={modalAberto}
+            onClose={fecharModal}
+            title={editando ? "Editar Morador" : "Cadastrar novo morador"}
+            action ={
+              <>
+                <button
+                  type="button"
+                  onClick={fecharModal}
+                  className="px-6 py-2 text-gray-300 hover:text-gray-200 transition-colors"
+                >
+                  Cancelar
+                </button>
+
+                <button
+                  type="submit"
+                  form="form-morador"
+                  className="bg-blue-600/80 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-all"
+                >
+                  {editando ? "Salvar Alterações" : "Cadastrar"}
+                </button>
+              </>
+            }
+          >
+              <form id="form-morador" onSubmit={handleSubmit} className="p-6 space-y-4">
                 <div>
                   <label className="block text-sm font-medium text-gray-400 mb-2">
                     Nome Completo *
@@ -309,8 +300,7 @@ const Moradores = () => {
                   </button>
                 </div>
               </form>
-            </div>
-          </div>
+          </Modal>
         )}
 
         {/* Lista de Moradores */}
