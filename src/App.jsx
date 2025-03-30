@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Login from './pages/Login'
 import Avisos from './pages/Avisos'
 import Moradores from './pages/Moradores'
+import Unidades from './pages/Unidades'
 
 function App() {
 
@@ -14,6 +15,7 @@ function App() {
         <Route path='/dashboard' element={<Dashboard />} />
         <Route path='/avisos' element={<Avisos />} />
         <Route path='/moradores' element={<Moradores />} />
+        <Route path='/unidades' element={<Unidades />} />
         <Route path='*' element={<h1>Not Found</h1>} />
       </Routes>
     </BrowserRouter>

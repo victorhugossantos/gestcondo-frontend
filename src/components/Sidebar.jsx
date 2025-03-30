@@ -13,10 +13,10 @@ const Sidebar = () => {
   };
 
   const menuItems = [
-    { label: "Início", path: "/dashboard", icon: HomeIcon},
+    { label: "Início", path: "#", icon: HomeIcon, disabled: true},
     { label: "Avisos", path: "/avisos" , icon: MegaphoneIcon},
-    { label: "Moradores", path: "/moradores", icon: UserGroupIcon, disabled: false},
-    { label: "Unidades", path: "#", icon: BuildingOfficeIcon, disabled: true},
+    { label: "Moradores", path: "/moradores", icon: UserGroupIcon},
+    { label: "Unidades", path: "/unidades", icon: BuildingOfficeIcon},
     { label: "Encomendas", path: "#", disabled: true, icon: CubeIcon},
     { label: "Tarefas", path: "#", disabled: true, icon: ClipboardDocumentCheckIcon},
     { label: "Finanças", path: "#", disabled: true, icon: CurrencyDollarIcon },
